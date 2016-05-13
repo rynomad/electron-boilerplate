@@ -5,8 +5,8 @@
 import os from 'os'; // native node.js module
 import { remote } from 'electron'; // native electron module
 import jetpack from 'fs-jetpack'; // module loaded from npm
-import { greet } from './hello_world/hello_world'; // code authored by you in this project
 import env from './env';
+import sty from './sty.js'; // code authored by you in this project
 
 console.log('Loaded environment variables:', env);
 
@@ -18,7 +18,30 @@ var appDir = jetpack.cwd(app.getAppPath());
 console.log('The author of this app is:', appDir.read('package.json', 'json').author);
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('greet').innerHTML = greet();
-    document.getElementById('platform-info').innerHTML = os.platform();
-    document.getElementById('env-name').innerHTML = env.name;
+  /*
+  var socket = io.connect("http://localhost:4242");
+  socket.on('connect', function() {
+    var term = new Terminal({
+      cols: 80,
+      rows: 24,
+      useStyle: true,
+      screenKeys: true,
+      cursorBlink: false
+    });
+    term.on('data', function(data) {
+      socket.emit('data', data);
+    });
+    term.on('title', function(title) {
+      document.title = title;
+    });
+    term.open(document.body);
+    term.write('\x1b[31mWelcome to term.js!\x1b[m\r\n');
+    socket.on('data', function(data) {
+      term.write(data);
+    });
+    socket.on('disconnect', function() {
+      term.destroy();
+    });
+  });
+  */
 });

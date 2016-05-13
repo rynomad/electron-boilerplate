@@ -1,0 +1,1 @@
+device.on("wake",function(){tap("led.blue()");tapsleep(10)});tapsleep(10)
