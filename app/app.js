@@ -18,30 +18,50 @@ var appDir = jetpack.cwd(app.getAppPath());
 console.log('The author of this app is:', appDir.read('package.json', 'json').author);
 
 document.addEventListener('DOMContentLoaded', function () {
-  /*
-  var socket = io.connect("http://localhost:4242");
-  socket.on('connect', function() {
-    var term = new Terminal({
-      cols: 80,
-      rows: 24,
-      useStyle: true,
-      screenKeys: true,
-      cursorBlink: false
-    });
-    term.on('data', function(data) {
-      socket.emit('data', data);
-    });
-    term.on('title', function(title) {
-      document.title = title;
-    });
-    term.open(document.body);
-    term.write('\x1b[31mWelcome to term.js!\x1b[m\r\n');
-    socket.on('data', function(data) {
-      term.write(data);
-    });
-    socket.on('disconnect', function() {
-      term.destroy();
-    });
+  'use strict';
+
+  var fs = require('fs');
+  var spawn = require('child_process').spawn;
+  var remote = require('electron').remote;
+  var pty = require('pty.js');
+
+  var el = document.body;
+  var shellOpts = {
+    cols: Math.floor(el.clientWidth / 7.1),
+    rows: Math.floor(el.clientHeight / 13),
+    screenKeys: true,
+    cursorBlink: false,
+    focusKeys: false,
+    noEvents: false,
+    useStyle: true,
+    env : {
+      ELECTRON_RUN_AS_NODE : 1
+    },
+    name: require('fs').existsSync('/usr/share/terminfo/x/xterm-256color')
+    ? 'xterm-256color'
+    : 'screen-256color',
+  };
+
+  var shell = pty.fork(remote.process.execPath, [__dirname +"/sty/index.js"], shellOpts);
+  var term = new Terminal(shellOpts);
+  term.open(el);
+
+  shell.stdout.on('data', function(data) {
+    term.write(data);
   });
-  */
+
+  shell.on('error', function(er) {
+    console.log(er)
+  })
+  term.on('data', function(data) {
+    shell.stdin.write(data);
+  });
+  window.addEventListener('resize', function(){
+    term.resize(
+      Math.floor(el.clientWidth / 7.1),
+      Math.floor(el.clientHeight / 13)
+    );
+
+  });
+
 });
