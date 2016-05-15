@@ -1,7 +1,6 @@
 'use strict';
 
 var dfu = require("./dfu.js")
-var ProgressBar = require("ascii-progress");
 var path = require("path")
 var playbook = require("./playbook.js")
 
@@ -10,10 +9,11 @@ var fsAutocomplete = require('vorpal-autocomplete-fs');
 var fs  = require("fs")
 
 const makeProgress = (options) => (color) => {
+  /*
   var bar = new ProgressBar(Object.assign({
     schema : `:action.bold :hashname, [:bar.${color}] :percent`
-  }, options));
-  return (() => bar.tick(options));
+  }, options));*/
+  return (() => {});//}.tick(options));
 }
 
 module.exports = (mesh) => {
