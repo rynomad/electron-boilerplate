@@ -29,7 +29,6 @@ module.exports = () => new Promise((res, rej) => {
     mesh.reportSource = ee;
     global.mesh = mesh;
     mesh.accept = (from, cb) => {
-      console.log("got accept")
       mesh.link(from, (err, link) => {
 
         if (err)

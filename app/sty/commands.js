@@ -9,11 +9,11 @@ var fsAutocomplete = require('vorpal-autocomplete-fs');
 var fs  = require("fs")
 
 const makeProgress = (options) => (color) => {
-  /*
+  
   var bar = new ProgressBar(Object.assign({
     schema : `:action.bold :hashname, [:bar.${color}] :percent`
   }, options));*/
-  return (() => {});//}.tick(options));
+  return (() => bar.tick(options));
 }
 
 module.exports = (mesh) => {

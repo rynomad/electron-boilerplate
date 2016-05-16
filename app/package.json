@@ -23,7 +23,7 @@
     "serialport": "^2.0.6",
     "telehash": "^0.4.12",
     "telehash-console": "^0.2.1",
-    "telehash-nix-usb": "^1.0.15",
+    "telehash-nix-usb": "^1.0.16",
     "utils-yaml-parse": "^1.0.0",
     "vorpal": "^1.10.10",
     "vorpal-autocomplete-fs": "0.0.3",

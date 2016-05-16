@@ -3,6 +3,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow-x: hidden
 }
 
 body {
@@ -16,10 +17,21 @@ a {
     text-decoration: none;
 }
 
-.container {
-    text-align: center;
+
+.term-el , .terminal{
+  height: 100%;
+  width: 100%;
 }
 
-.subtitle {
-    color: gray;
+::-webkit-scrollbar {
+  width: 8px;
 }
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, .4)
+}
+

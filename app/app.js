@@ -6,7 +6,7 @@ import os from 'os'; // native node.js module
 import { remote } from 'electron'; // native electron module
 import jetpack from 'fs-jetpack'; // module loaded from npm
 import env from './env';
-import sty from './sty.js'; // code authored by you in this project
+//import sty from './sty.js'; // code authored by you in this project
 
 console.log('Loaded environment variables:', env);
 
@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var remote = require('electron').remote;
   var pty = require('pty.js');
 
-  var el = document.body;
+
+  var el = document.getElementById('term');
   var shellOpts = {
     cols: Math.floor(el.clientWidth / 7.1),
     rows: Math.floor(el.clientHeight / 13),
@@ -41,13 +42,13 @@ document.addEventListener('DOMContentLoaded', function () {
     ? 'xterm-256color'
     : 'screen-256color',
   };
-
   var shell = pty.fork(remote.process.execPath, [__dirname +"/sty/index.js"], shellOpts);
   var term = new Terminal(shellOpts);
   term.open(el);
+  window.shell = shell;
 
   shell.stdout.on('data', function(data) {
-    term.write(data);
+    term.write(data.toString());
   });
 
   shell.on('error', function(er) {
