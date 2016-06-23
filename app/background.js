@@ -7,6 +7,8 @@ import { app, Menu } from 'electron';
 import { devMenuTemplate } from './helpers/dev_menu_template';
 import { editMenuTemplate } from './helpers/edit_menu_template';
 import createWindow from './helpers/window';
+import {Ground} from './bundle.js'
+
 
 // Special module holding environment variables which you declared
 // in config/env_xxx.json file.
@@ -29,10 +31,19 @@ app.on('ready', function () {
         width: 1000,
         height: 600
     });
+    console.log("hey hey")
+    var appx = Ground({}, () => {
+        console.log("GROUND UP")
+    })
+
+    appx.on('link', (link) => {
+      mainWindow.webContents.executeJavaScript(`new Notification("new link", {title : "${link.hashname.substr(0,8)}", body : "hello"})`);
+    })
+
+    appx.start()
 
     mainWindow.loadURL('file://' + __dirname + '/app.html');
 
-    mainWindow.openDevTools();
 });
 
 app.on('window-all-closed', function () {

@@ -23,7 +23,8 @@ const setup = (settings, cb) => {
   var set = {
       httpAdminRoot:"/red",
       httpNodeRoot: "/api",
-      userDir: path.join(require("os").homedir(), ".nodered"),
+      nodesDir : path.join(__dirname, "../.."),
+      userDir: path.join(require("os").homedir(),  ".nodered"),
       functionGlobalContext: {
         filament : source
       },    // enables global context

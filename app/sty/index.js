@@ -3,6 +3,7 @@ var m = require("./mesh.js");
 var v = require("./vorpal.js");
 
 function init(){
+  process.chdir(require("os").homedir())
   m().then(v).then((env) => {
     /*
     var colors = ["red", "blue", "green"]

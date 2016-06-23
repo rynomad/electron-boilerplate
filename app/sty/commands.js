@@ -3,16 +3,13 @@
 var dfu = require("./dfu.js")
 var path = require("path")
 var playbook = require("./playbook.js")
-
+var ProgressBar = require("progress");
 var AsciiTable = require("ascii-table");
 var fsAutocomplete = require('vorpal-autocomplete-fs');
 var fs  = require("fs")
 
 const makeProgress = (options) => (color) => {
-  
-  var bar = new ProgressBar(Object.assign({
-    schema : `:action.bold :hashname, [:bar.${color}] :percent`
-  }, options));*/
+  var bar = new ProgressBar(`:action.bold :hashname, [:bar.${color}] :percent`, options));
   return (() => bar.tick(options));
 }
 
@@ -213,14 +210,6 @@ var Commands = {
       Modize(mode, delim, (link) => runCommand(this, link, args)).then(cb)
     }
   },
-  sink : {
-    command: ["sink <sink> [config]", "run the given sink file with the given config json file"],
-    autocomplete : fsAutocomplete(),
-    action : (mode, delim) => function(args,cb){
-      require(path.join(process.cwd(), args.sink))(args.config ? require(args.config) : {}, mesh.reportSource);
-      cb()
-    }
-  },
   playbook: {
     command: ["playbook <file>", "run a playbook of sty commands against a tap or taps"],
     options: [
@@ -228,8 +217,10 @@ var Commands = {
     ], 
     autocomplete: fsAutocomplete(),
     action: (mode, delim) => function(args,cb){
-      console.log(args);
-      var promise = playbook(VORPAL, Commands, mesh, args.file, mode == "device" ? delim : null)
+      var p = args.file.split(path.sep);
+      var file = p.pop();
+      process.chdir(p.join(path.sep));
+      var promise = playbook(VORPAL, Commands, mesh, file, mode == "device" ? delim : null)
       if (args.options.daemon){
         this.log("GOING INTO DAEMON MODE, CTRL + C to cancel, MUST exit application completely to stop auto execution of playbook on new devices");
         mesh.accept = (from) => {
@@ -241,6 +232,11 @@ var Commands = {
             playbook(VORPAL, Commands, mesh, args.file, from.hashname.substr(0,8));
           })
         }
+      } else {
+        promise.then(() => {
+          process.chdir(require("os").homedir())
+          cb();
+        })
       }
     }
   },

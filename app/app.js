@@ -7,7 +7,13 @@ import { remote } from 'electron'; // native electron module
 import jetpack from 'fs-jetpack'; // module loaded from npm
 import env from './env';
 //import sty from './sty.js'; // code authored by you in this project
+/*
+import Notify './helpters/notify'
 
+Notify(env, (label, event) => {
+  new Notification(label, JSON.stringify(event));
+});
+*/
 console.log('Loaded environment variables:', env);
 
 var app = remote.app;
@@ -35,14 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
     focusKeys: false,
     noEvents: false,
     useStyle: true,
-    env : {
+    env : Object.assign(env, {
       ELECTRON_RUN_AS_NODE : 1
-    },
+    }),
     name: require('fs').existsSync('/usr/share/terminfo/x/xterm-256color')
     ? 'xterm-256color'
     : 'screen-256color',
   };
-  var shell = pty.fork(remote.process.execPath, [__dirname +"/sty/index.js"], shellOpts);
+  var shell = pty.fork(remote.process.execPath, [__dirname +"/node_modules/stty/index.js"], shellOpts);
   var term = new Terminal(shellOpts);
   term.open(el);
   window.shell = shell;

@@ -1,6 +1,6 @@
 var fs = require('fs')
 const setup = (settings, cb) => {
-    var stream = fs.createWriteStream(settings.file, {flags : 'a'})
+    var stream = fs.createWriteStream(settings.path, {flags : 'a'})
 
     cb((label, event) => {
         ([label,JSON.stringify(event), "\n"]).join(",")

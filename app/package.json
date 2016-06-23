@@ -1,39 +1,21 @@
 {
-  "name": "electron-boilerplate",
-  "productName": "Electron Boilerplate",
-  "description": "Starter for your Electron application. Out of the box ready for serious stuff.",
+  "name": "STY",
+  "productName": "STY",
+  "description": "An IDE for your IOT.",
   "version": "0.1.0",
   "author": "Mr Gumby",
-  "copyright": "© 2016, your company here",
+  "copyright": "© 2016, SWFL Inc.",
   "main": "background.js",
   "dependencies": {
-    "ascii-table": "0.0.9",
-    "aws-sdk": "^2.3.9",
-    "crc": "^3.3.0",
-    "eventemitter2": "^1.0.3",
-    "express": "^4.13.4",
-    "fs-jetpack": "^0.9.0",
-    "hashname": "^0.3.1",
-    "lob-enc": "0.0.17",
-    "minimist": "^1.2.0",
-    "mysql": "^2.10.2",
-    "node-red": "^0.13.4",
-    "node-slackr": "^0.1.4",
-    "pty": "0.0.0",
-    "serialport": "^2.0.6",
-    "telehash": "^0.4.12",
-    "telehash-console": "^0.2.1",
-    "telehash-nix-usb": "^1.0.16",
-    "utils-yaml-parse": "^1.0.0",
-    "vorpal": "^1.10.10",
-    "vorpal-autocomplete-fs": "0.0.3",
-    "vorpal-repl": "^1.1.8",
-    "ws": "^1.1.0"
+    "keytar": "^3.0.2",
+    "noble": "^1.6.0",
+    "serial-worker": "^1.0.5",
+    "telehash-transport-serial-host-electron": "0.0.21"
   },
   "packageNameTemplate": "{{name}}-v{{version}}-{{platform}}-{{arch}}",
   "osx": {
     "build": "1",
-    "identifier": "com.example.electron-boilerplate",
+    "identifier": "com.filament.sty",
     "LSApplicationCategoryType": "public.app-category.productivity",
     "//codeSignIdentitiy": {
       "dmg": "Developer ID Application: Company Name (APPIDENTITY)",
@@ -43,5 +25,8 @@
   },
   "scripts": {
     "postinstall": "node ../tasks/rebuild_native_modules"
+  },
+  "env": {
+    "NOTIFICATIONS": 9999
   }
 }

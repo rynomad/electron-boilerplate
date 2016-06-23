@@ -20,7 +20,7 @@ const createSlackMessage = (label, evt) => ({
 })
 
 const setup = (settings, cb) => {
-    var slack = new Slack(SLACK, {
+    var slack = new Slack(settings.url, {
       channel : settings.channel,
       link_names : 1
     })
