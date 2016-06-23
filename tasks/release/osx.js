@@ -191,5 +191,5 @@ module.exports = function () {
         .then(signApp)
         .then(packToDmgFile)
         .then(cleanClutter)
-        .catch(console.error);
+        .catch((e) => console.error(e, e.stack));
 };
